@@ -43,49 +43,50 @@ server.register([{
                 log: '*'
             }
         },
-    			{
-    				reporter: require('good-file'),
-    				events: { ops: '*' },
-    				config: {
-    					path: './logs',
-    					prefix: 'hapi-process',
-    					rotate: 'daily'
-    				}
-    			},
-    			{
-    				reporter: require('good-file'),
-    				events: { response: '*' },
-    				config: {
-    					path: './logs',
-    					prefix: 'hapi-requests',
-    					rotate: 'daily'
-    				}
-    			},
-    			{
-    				reporter: require('good-file'),
-    				events: { error: '*' },
-    				config: {
-    					path: './logs',
-    					prefix: 'hapi-error',
-    					rotate: 'daily'
-    				}
-    			}
-    		]
-
+		{
+			reporter: require('good-file'),
+			events: { ops: '*' },
+			config: {
+				path: './logs',
+				prefix: 'hapi-process',
+				rotate: 'daily'
+			}
+		},
+		{
+			reporter: require('good-file'),
+			events: { response: '*' },
+			config: {
+				path: './logs',
+				prefix: 'hapi-requests',
+				rotate: 'daily'
+			}
+		},
+		{
+			reporter: require('good-file'),
+			events: { error: '*' },
+			config: {
+				path: './logs',
+				prefix: 'hapi-error',
+				rotate: 'daily'
+			}
+		}]
     }
 
-    },
-    {
-        register: require('./routes/comments')
-    }
-], function (err) {
+},
+{
+    register: require('./routes/comments')
+
+}], function (err) {
 
     if (err) {
         throw err; // something bad happened loading the plugin
     }
 
-    server.start(function () {
-
-        server.log('info', 'Server running at: ' + server.info.uri);
-    });
+    if (!module.parent) {
+        server.start(function() {
+            console.log("Server started", server.info.uri);
+        });
+    }
 });
+
+module.exports = server;
