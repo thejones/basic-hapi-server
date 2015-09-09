@@ -19,7 +19,7 @@
     "lab": "^5.0.0"
   },
   "scripts": {
-    "test": "lab -t 60",
+    "test": "lab -t 50",
     "start": "node server.js"
   },
   "author": "Alex Jones",
